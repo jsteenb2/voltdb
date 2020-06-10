@@ -826,11 +826,9 @@ public class JDBCExportClient extends ExportClientBase {
         @Override
         public void sourceNoLongerAdvertised(AdvertisedDataSource source) {
             if (m_es != null) {
-                m_es.shutdown();
-                try {
-                    m_es.awaitTermination(4, TimeUnit.MINUTES);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                List<Runnable> tasks = m_es.shutdownNow();
+                if (!tasks.isEmpty()) {
+                    m_logger.info("Block listener executive service terminated with " + tasks.size() + " tasks.");
                 }
             }
             closeConnection();
