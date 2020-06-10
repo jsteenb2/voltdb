@@ -44,7 +44,6 @@ import org.voltdb.VoltDB;
 import org.voltdb.VoltType;
 import org.voltdb.export.AdvertisedDataSource;
 import org.voltdb.export.ExportManager;
-import org.voltdb.export.ExportManagerInterface;
 import org.voltdb.export.ExportManagerInterface.ExportMode;
 import org.voltdb.exportclient.ExportRow.ROW_OPERATION;
 import org.voltdb.types.GeographyPointValue;
@@ -829,7 +828,7 @@ public class JDBCExportClient extends ExportClientBase {
             if (m_es != null) {
                 m_es.shutdown();
                 try {
-                    m_es.awaitTermination(356, TimeUnit.DAYS);
+                    m_es.awaitTermination(4, TimeUnit.MINUTES);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
